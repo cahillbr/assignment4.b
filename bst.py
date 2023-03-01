@@ -1,3 +1,10 @@
+# Name: Brendan Cahill
+# OSU Email: cahillbr@oregonstate,edu
+# Course: CS261 - Data Structures
+# Assignment: 4
+# Due Date: 2/28/2023
+# description: Part 1 Implement the BST class, somewhat challenging but was able to suffice
+
 import random
 from queue_and_stack import Queue, Stack
 
@@ -98,29 +105,27 @@ class BST:
     # ------------------------------------------------------------------ #
     def add(self, value: object) -> None:
         new_node = BSTNode(value)
-        return self.add_help(new_node)
 
-    def add_help(self, new_node : BSTNode):
         # if tree is empty, set new_node as root
         if not self._root:
             self._root = new_node
-            return
+            return new_node
 
         # traverse the tree to find the appropriate place to insert new_node
         curr_node = self._root
         while True:
-            if new_node.value < curr_node.value:
+            if value < curr_node.value:
                 if curr_node.left:
                     curr_node = curr_node.left
                 else:
                     curr_node.left = new_node
-                    return
+                    return new_node
             else:
                 if curr_node.right:
                     curr_node = curr_node.right
                 else:
                     curr_node.right = new_node
-                    return
+                    return new_node
 
 
     def remove(self, value: object) -> bool:

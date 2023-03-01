@@ -1,3 +1,11 @@
+# Name: Brendan Cahill
+# OSU Email: cahillbr@oregonstate,edu
+# Course: CS261 - Data Structures
+# Assignment: 4
+# Due Date: 2/28/2023
+# description: Part 2 Implement the AVL class (a subclass of BST)
+# unfortunately was not able to fully finish code struggled extensively but tried my hardest
+
 import random
 from queue_and_stack import Queue, Stack
 from bst import BSTNode, BST
@@ -93,8 +101,31 @@ class AVL(BST):
 
     def add(self, value: object) -> None:
         new_node = AVLNode(value)
-        self.add_help(new_node)
 
+        # if tree is empty, set new_node as root
+        if not self._root:
+            self._root = new_node
+            return
+
+        # traverse the tree to find the appropriate place to insert new_node
+        curr_node = self._root
+        while True:
+            if value < curr_node.value:
+                if curr_node.left:
+                    curr_node = curr_node.left
+                else:
+                    curr_node.left = new_node
+                    new_node.parent = curr_node
+                    break
+            else:
+                if curr_node.right:
+                    curr_node = curr_node.right
+                else:
+                    curr_node.right = new_node
+                    new_node.parent = curr_node
+                    break
+
+        # update the heights of all ancestors of the new node
         node = new_node
         while node:
             left_height = node.left.height if node.left else -1
@@ -137,8 +168,7 @@ class AVL(BST):
         node.height = 1 + max(node.left.height if node.left else -1, node.right.height if node.right else -1)
         pivot.height = 1 + max(node.height, pivot.right.height if pivot.right else -1)
 
-        if node == self._root:
-            self._root = pivot
+        return pivot
 
     def _rotate_right(self, node: AVLNode) -> None:
         """
@@ -152,8 +182,7 @@ class AVL(BST):
         node.height = 1 + max(node.left.height if node.left else -1, node.right.height if node.right else -1)
         pivot.height = 1 + max(pivot.left.height if pivot.left else -1, node.height)
 
-        if node == self._root:
-            self._root = pivot
+        return pivot
 
     def remove(self, value: object) -> bool:
         node = self.find(value)
