@@ -93,31 +93,8 @@ class AVL(BST):
 
     def add(self, value: object) -> None:
         new_node = AVLNode(value)
+        self.add_help(new_node)
 
-        # if tree is empty, set new_node as root
-        if not self._root:
-            self._root = new_node
-            return
-
-        # traverse the tree to find the appropriate place to insert new_node
-        curr_node = self._root
-        while True:
-            if value < curr_node.value:
-                if curr_node.left:
-                    curr_node = curr_node.left
-                else:
-                    curr_node.left = new_node
-                    new_node.parent = curr_node
-                    break
-            else:
-                if curr_node.right:
-                    curr_node = curr_node.right
-                else:
-                    curr_node.right = new_node
-                    new_node.parent = curr_node
-                    break
-
-        # update the heights of all ancestors of the new node
         node = new_node
         while node:
             left_height = node.left.height if node.left else -1

@@ -98,7 +98,9 @@ class BST:
     # ------------------------------------------------------------------ #
     def add(self, value: object) -> None:
         new_node = BSTNode(value)
+        return self.add_help(new_node)
 
+    def add_help(self, new_node : BSTNode):
         # if tree is empty, set new_node as root
         if not self._root:
             self._root = new_node
@@ -107,7 +109,7 @@ class BST:
         # traverse the tree to find the appropriate place to insert new_node
         curr_node = self._root
         while True:
-            if value < curr_node.value:
+            if new_node.value < curr_node.value:
                 if curr_node.left:
                     curr_node = curr_node.left
                 else:
@@ -119,6 +121,7 @@ class BST:
                 else:
                     curr_node.right = new_node
                     return
+
 
     def remove(self, value: object) -> bool:
         """
